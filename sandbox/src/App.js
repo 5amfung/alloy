@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Home from "./Home";
 import Consent from "./Consent";
+import Personalization from "./Personalization";
 import Links from "./Links";
 import EventMerge from "./EventMerge";
 import LargePayload from "./LargePayload";
@@ -31,6 +32,9 @@ function BasicExample() {
           </li>
           <li>
             <Link to="/consent">Consent</Link>
+          </li>
+          <li>
+            <Link to="/personalization">Personalization</Link>
           </li>
           <li>
             <Link to="/links">Links</Link>
@@ -57,6 +61,7 @@ function BasicExample() {
 
         <Route exact path="/" component={Home} />
         <Route path="/consent" component={Consent} />
+        <Route path="/personalization" component={Personalization} />
         <Route path="/links" component={Links} />
         <Route path="/eventMerge" component={EventMerge} />
         <Route path="/largePayload" component={LargePayload} />

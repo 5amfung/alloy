@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 export default ({ eventManager, mergeMeta }) => {
-  return ({ meta }) => {
+  // Called when a decision is auto-rendered for the __view__ scope (non-SPA view).
+  return ({ decisionsMeta }) => {
     const event = eventManager.createEvent();
     event.mergeXdm({ eventType: "display" });
-    mergeMeta(event, meta);
-
+    mergeMeta(event, decisionsMeta);
     return eventManager.sendEvent(event);
   };
 };

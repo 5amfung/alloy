@@ -14,14 +14,12 @@ import createViewCollect from "../../../../../src/components/Personalization/cre
 describe("Personalization::createViewCollect", () => {
   let eventManager;
   let mergeMeta;
-  const meta = {
-    decisions: [
-      {
-        id: "foo1",
-        scope: "cart"
-      }
-    ]
-  };
+  const decisionsMeta = [
+    {
+      id: "foo1",
+      scope: "cart"
+    }
+  ];
   const event = {
     mergeXdm: jasmine.createSpy()
   };
@@ -31,7 +29,7 @@ describe("Personalization::createViewCollect", () => {
       sendEvent: undefined,
       createEvent: event
     });
-    mergeMeta = jasmine.createSpy("mergeMeta").and.returnValue({ meta });
+    mergeMeta = jasmine.createSpy("mergeMeta");
   });
 
   it("sends event with metadata when decisions is not empty", () => {
@@ -45,11 +43,11 @@ describe("Personalization::createViewCollect", () => {
     };
     const collect = createViewCollect({ eventManager, mergeMeta });
 
-    collect({ meta });
+    collect({ decisionsMeta });
 
     expect(eventManager.createEvent).toHaveBeenCalled();
     expect(event.mergeXdm).toHaveBeenCalledWith(expectedXdmObject);
-    expect(mergeMeta).toHaveBeenCalledWith(event, meta);
+    expect(mergeMeta).toHaveBeenCalledWith(event, decisionsMeta);
     expect(eventManager.sendEvent).toHaveBeenCalled();
   });
 
@@ -64,10 +62,9 @@ describe("Personalization::createViewCollect", () => {
     const data = {
       eventType: "display"
     };
-    const emptyMeta = { decisions: [] };
     const collect = createViewCollect({ eventManager, mergeMeta });
 
-    collect({ meta: emptyMeta, xdm: xdmObject });
+    collect({ decisionsMeta: [], xdm: xdmObject });
 
     expect(eventManager.createEvent).toHaveBeenCalled();
     expect(event.mergeXdm).toHaveBeenCalledWith(data);

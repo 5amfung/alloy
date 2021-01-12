@@ -10,8 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const mergeMeta = (event, meta) => {
-  event.mergeMeta({ personalization: { ...meta } });
+export const mergeMeta = (event, decisionsMeta) => {
+  const propositions = decisionsMeta.map(decisionMeta => {
+    return {
+      decisionEventID: decisionMeta.id,
+      decisionScope: decisionMeta.scope
+    };
+  });
+  event.mergeXdm({
+    _experience: {
+      propositions
+    }
+  });
 };
 
 export const mergeQuery = (event, details) => {

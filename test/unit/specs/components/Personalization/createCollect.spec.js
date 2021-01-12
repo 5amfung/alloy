@@ -14,10 +14,12 @@ import createCollect from "../../../../../src/components/Personalization/createC
 describe("Personalization::createCollect", () => {
   let eventManager;
   let mergeMeta;
-  const meta = {
-    id: 1,
-    decisionId: "foo"
-  };
+  const decisionsMeta = [
+    {
+      id: 1,
+      decisionId: "foo"
+    }
+  ];
   const event = {
     mergeXdm: jasmine.createSpy()
   };
@@ -27,15 +29,15 @@ describe("Personalization::createCollect", () => {
       sendEvent: undefined,
       createEvent: event
     });
-    mergeMeta = jasmine.createSpy("mergeMeta").and.returnValue(meta);
+    mergeMeta = jasmine.createSpy("mergeMeta");
   });
 
   it("collects and sends event with metadata", () => {
     const collect = createCollect({ eventManager, mergeMeta });
-    collect({ meta });
+    collect({ decisionsMeta });
     expect(eventManager.createEvent).toHaveBeenCalled();
     expect(event.mergeXdm).toHaveBeenCalledWith({ eventType: "display" });
-    expect(mergeMeta).toHaveBeenCalledWith(event, meta);
+    expect(mergeMeta).toHaveBeenCalledWith(event, decisionsMeta);
     expect(eventManager.sendEvent).toHaveBeenCalled();
   });
 });
