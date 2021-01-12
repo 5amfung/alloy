@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { isNonEmptyArray } from "../../utils";
 
-export default ({ eventManager, mergeMeta }) => {
+export default ({ eventManager, mergeDecisionsMeta }) => {
   // Called when an offer for a specific SPA view is auto-rendered.
   return ({ decisionsMeta, xdm }) => {
     const data = { eventType: "display" };
@@ -25,7 +25,7 @@ export default ({ eventManager, mergeMeta }) => {
         webPageDetails: { viewName }
       };
 
-      mergeMeta(event, decisionsMeta);
+      mergeDecisionsMeta(event, decisionsMeta);
     }
     event.mergeXdm(data);
     event.mergeXdm(xdm);

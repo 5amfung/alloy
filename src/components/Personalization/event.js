@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const mergeMeta = (event, decisionsMeta) => {
+export const mergeDecisionsMeta = (event, decisionsMeta) => {
   const propositions = decisionsMeta.map(decisionMeta => {
     return {
       decisionEventID: decisionMeta.id,

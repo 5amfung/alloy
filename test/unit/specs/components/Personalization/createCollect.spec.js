@@ -13,7 +13,7 @@ import createCollect from "../../../../../src/components/Personalization/createC
 
 describe("Personalization::createCollect", () => {
   let eventManager;
-  let mergeMeta;
+  let mergeDecisionsMeta;
   const decisionsMeta = [
     {
       id: 1,
@@ -29,15 +29,15 @@ describe("Personalization::createCollect", () => {
       sendEvent: undefined,
       createEvent: event
     });
-    mergeMeta = jasmine.createSpy("mergeMeta");
+    mergeDecisionsMeta = jasmine.createSpy("mergeDecisionsMeta");
   });
 
   it("collects and sends event with metadata", () => {
-    const collect = createCollect({ eventManager, mergeMeta });
+    const collect = createCollect({ eventManager, mergeDecisionsMeta });
     collect({ decisionsMeta });
     expect(eventManager.createEvent).toHaveBeenCalled();
     expect(event.mergeXdm).toHaveBeenCalledWith({ eventType: "display" });
-    expect(mergeMeta).toHaveBeenCalledWith(event, decisionsMeta);
+    expect(mergeDecisionsMeta).toHaveBeenCalledWith(event, decisionsMeta);
     expect(eventManager.sendEvent).toHaveBeenCalled();
   });
 });
