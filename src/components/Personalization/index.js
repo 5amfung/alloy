@@ -27,6 +27,7 @@ import createViewCacheManager from "./createViewCacheManager";
 import createViewChangeHandler from "./createViewChangeHandler";
 import decisionsExtractor from "./decisionsExtractor";
 import createOnResponseHandler from "./createOnResponseHandler";
+import createRedirectHandler from "./createRedirectHandler";
 
 const createPersonalization = ({ config, logger, eventManager }) => {
   const collect = createCollect({ eventManager, mergeMeta });
@@ -47,6 +48,7 @@ const createPersonalization = ({ config, logger, eventManager }) => {
     executeActions,
     collect: viewCollect
   });
+  const handleRedirectDecisions = createRedirectHandler({ collect });
   const executeCachedViewDecisions = createExecuteCachedViewDecisions({
     viewCache,
     executeViewDecisions,
@@ -56,6 +58,7 @@ const createPersonalization = ({ config, logger, eventManager }) => {
     decisionsExtractor,
     executeDecisions,
     executeCachedViewDecisions,
+    handleRedirectDecisions,
     showContainers
   });
   const fetchDataHandler = createFetchDataHandler({
